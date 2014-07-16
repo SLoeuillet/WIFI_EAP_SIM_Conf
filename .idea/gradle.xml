@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="/sfr/GIT/SLoeuillet-WIFI_EAP_SIM_Conf" />
-            <option value="/sfr/GIT/SLoeuillet-WIFI_EAP_SIM_Conf/app" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>

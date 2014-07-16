@@ -20,7 +20,7 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String ssid = new String("");
+        String ssid = "";
         TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String simOperator = tel.getSimOperator(); // Not getNetworkOperator wrt Roaming
 
@@ -29,8 +29,8 @@ public class MyActivity extends Activity {
             int mnc = Integer.parseInt(simOperator.substring(3));
             if ( mcc == 208 )
             {
-                if ( ( mnc >=  9 ) && ( mnc <= 13 ) ) { ssid = new String("SFR WiFi Mobile"); }
-                if ( ( mnc >= 15 ) && ( mnc <= 16 ) ) { ssid = new String("FreeWifi_secure"); }
+                if ( ( mnc >=  9 ) && ( mnc <= 13 ) ) { ssid = "SFR WiFi Mobile"; }
+                if ( ( mnc >= 15 ) && ( mnc <= 16 ) ) { ssid = "FreeWifi_secure"; }
             }
 
             if ( !ssid.isEmpty() ) {
