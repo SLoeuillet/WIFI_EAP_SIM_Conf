@@ -10,7 +10,7 @@ import java.util.List;
 import android.content.Context;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import android.telephony.IccOpenLogicalChannelResponse;
+//import android.telephony.IccOpenLogicalChannelResponse;
 
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiEnterpriseConfig;
@@ -44,7 +44,7 @@ public class MyActivity extends Activity {
                 String NAI_suffix = b.getString(SmsManager.MMS_CONFIG_NAI_SUFFIX);
 
                 // IMSI : 208(mcc) + 15(mnc) + 0000XXXXXX + @...
-                enterpriseConfig.setIdentity("1"+tel.getSubscriberId()+NAI_suffix); // Use 1 + IMSI (See RFC4186)
+                enterpriseConfig.setIdentity("1"+tel.getSubscriberId()+"@"+NAI_suffix); // Use 1 + IMSI (See RFC4186)
 
                 WifiConfiguration wifiConfig = new WifiConfiguration();
                 wifiConfig.SSID = ssid;
