@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import java.util.List;
 
 import android.content.Context;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+import android.telephony.IccOpenLogicalChannelResponse;
 
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiEnterpriseConfig;
@@ -37,8 +39,12 @@ public class MyActivity extends Activity {
                 WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
                 enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.SIM); // EAP SIM / AKA for Mobile Phones
 
-                // IMSI : 208(mcc) + 15(mnc) + 0000XXXXXX
-                //enterpriseConfig.setIdentity("1"+tel.getSubscriberId()); // Use 1 + IMSI (See RFC4186)
+                SmsManager sm = SmsManager.getDefault();
+                Bundle b = sm.getCarrierConfigValues();
+                String NAI_suffix = b.getString(SmsManager.MMS_CONFIG_NAI_SUFFIX);
+
+                // IMSI : 208(mcc) + 15(mnc) + 0000XXXXXX + @...
+                enterpriseConfig.setIdentity("1"+tel.getSubscriberId()+NAI_suffix); // Use 1 + IMSI (See RFC4186)
 
                 WifiConfiguration wifiConfig = new WifiConfiguration();
                 wifiConfig.SSID = ssid;
@@ -90,3 +96,25 @@ public class MyActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+/*
+
+https://developer.android.com/sdk/api_diff/21/changes.html
+https://developer.android.com/sdk/api_diff/21/changes/android.net.wifi.WifiEnterpriseConfig.Eap.html
+https://developer.android.com/sdk/api_diff/21/changes/android.telephony.TelephonyManager.html
+
+https://developer.android.com/reference/android/net/wifi/WifiEnterpriseConfig.Eap.html
+https://developer.android.com/reference/android/telephony/IccOpenLogicalChannelResponse.html
+https://developer.android.com/reference/android/telephony/TelephonyManager.html
+
+android.telephony.TelephonyManager
+
+Added Methods
+boolean iccCloseLogicalChannel(int)
+byte[] iccExchangeSimIO(int, int, int, int, int, String)
+IccOpenLogicalChannelResponse iccOpenLogicalChannel(String)
+String iccTransmitApduBasicChannel(int, int, int, int, int, String)
+String iccTransmitApduLogicalChannel(int, int, int, int, int, int, String)
+String sendEnvelopeWithStatus(String)
+
+ */
